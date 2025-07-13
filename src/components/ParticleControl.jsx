@@ -9,7 +9,15 @@ const ParticleControls = ({
   onDownloadImage
 }) => {
   const handleSliderChange = (key, value) => {
+    onConfigChange({ ...config, [key]: value[0] });
+  };
+
+  const handleSelectChange = (key, value) => {
     onConfigChange({ ...config, [key]: value });
+  };
+
+  const handleCheckboxChange = (key, checked) => {
+    onConfigChange({ ...config, [key]: checked });
   };
 
   const handleFileChange = (e) => {

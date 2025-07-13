@@ -1,29 +1,81 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
 // Helper function to apply color filters
-const applyFilter = (color, filter) => {
-  const [r, g, b, a] = color;
+const applyFilter = (color, filter, hueRotation) => {
+  let [r, g, b, a] = color;
+
+  // Apply color filter
   switch (filter) {
     case 'grayscale':
       const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-      return [gray, gray, gray, a];
+      r = g = b = gray;
+      break;
     case 'sepia':
       const tr = Math.min(255, 0.393 * r + 0.769 * g + 0.189 * b);
       const tg = Math.min(255, 0.349 * r + 0.686 * g + 0.168 * b);
       const tb = Math.min(255, 0.272 * r + 0.534 * g + 0.131 * b);
-      return [tr, tg, tb, a];
+      r = tr; g = tg; b = tb;
+      break;
     case 'invert':
-      return [255 - r, 255 - g, 255 - b, a];
+      r = 255 - r; g = 255 - g; b = 255 - b;
+      break;
     default:
-      return color;
+      break;
   }
+
+  // Apply hue rotation
+  if (hueRotation !== 0) {
+    // Convert RGB to HSL
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+      h = s = 0; // achromatic
+    } else {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    // Apply rotation
+    h = (h * 360 + hueRotation) % 360;
+    if (h < 0) h += 360;
+    h /= 360;
+
+    // Convert HSL back to RGB
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+
+    r = Math.round(r * 255);
+    g = Math.round(g * 255);
+    b = Math.round(b * 255);
+  }
+
+  return [r, g, b, a];
 };
 
 // Helper function to draw particles
 const drawParticle = (ctx, particle, origin, config) => {
-  ctx.fillStyle = `hsl(${config.hueRotation}, 100%, 50%)`;
-
-  const filteredColor = applyFilter(origin.color, config.filter);
+  const filteredColor = applyFilter(origin.color, config.filter, config.hueRotation);
   ctx.fillStyle = `rgba(${filteredColor[0]}, ${filteredColor[1]}, ${filteredColor[2]}, ${filteredColor[3] / 255})`;
 
   const x = Math.floor(particle.x);

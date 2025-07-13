@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import ParticleCanvas from './ParticleCanvas';
 import ParticleControls from './ParticleControl';
 import { downloadCanvasAsImage } from '../utils/recorder';
@@ -62,41 +63,62 @@ const ParticleApp = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white font-mono p-5 flex flex-col items-center">
-      <div className="max-w-2xl text-center mb-8 leading-relaxed">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
-          Particle Disintegration Effect
+    <div className="min-h-screen bg-background text-foreground font-sans p-5 flex flex-col items-center">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="max-w-4xl text-center mb-12"
+      >
+        <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-primary">
+          Particle<span className="text-accent-foreground">FX</span>
         </h1>
-        <p className="text-gray-300">
-          An image particle system that converts pixels into interactive particles. 
-          Move your mouse over the canvas to attract particles, click to create ripple effects.
+        <p className="text-muted-foreground text-lg">
+          Create stunning particle disintegration effects from any image. 
+          Play with the controls and see your images come to life.
         </p>
         {particleInfo.particleCount > 0 && (
-          <div className="text-xs text-gray-400 mt-3 font-mono">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="text-sm text-muted-foreground mt-4 font-sans"
+          >
             Particles: {particleInfo.particleCount} | Speed: {particleInfo.speed.toFixed(2)} | 
             Gravity Factor: {particleInfo.gravityFactor.toFixed(3)}
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
       
-      <div className="flex flex-col lg:flex-row gap-10 items-center justify-center flex-wrap">
-        <ParticleCanvas
-          config={config}
-          imageUrl={imageUrl}
-          resetTrigger={resetTrigger}
-          explodeTrigger={explodeTrigger}
-          onParticlesInit={handleParticlesInit}
-          canvasRef={canvasRef}
-        />
+      <div className="flex flex-col lg:flex-row gap-10 items-start justify-center flex-wrap">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <ParticleCanvas
+            config={config}
+            imageUrl={imageUrl}
+            resetTrigger={resetTrigger}
+            explodeTrigger={explodeTrigger}
+            onParticlesInit={handleParticlesInit}
+            canvasRef={canvasRef}
+          />
+        </motion.div>
         
-        <ParticleControls
-          config={config}
-          onConfigChange={handleConfigChange}
-          onReset={handleReset}
-          onExplode={handleExplode}
-          onImageLoad={handleImageLoad}
-          onDownloadImage={handleDownloadImage}
-        />
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <ParticleControls
+            config={config}
+            onConfigChange={handleConfigChange}
+            onReset={handleReset}
+            onExplode={handleExplode}
+            onImageLoad={handleImageLoad}
+            onDownloadImage={handleDownloadImage}
+          />
+        </motion.div>
       </div>
     </div>
   );
