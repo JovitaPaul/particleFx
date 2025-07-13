@@ -5,7 +5,8 @@ const ParticleControls = ({
   onConfigChange, 
   onReset, 
   onExplode, 
-  onImageLoad 
+  onImageLoad,
+  onDownloadImage
 }) => {
   const handleSliderChange = (key, value) => {
     onConfigChange({ ...config, [key]: value });
@@ -95,6 +96,22 @@ const ParticleControls = ({
         />
       </div>
       
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-gray-300">
+          Color Filter:
+        </label>
+        <select
+          value={config.filter}
+          onChange={(e) => handleSliderChange('filter', e.target.value)}
+          className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 text-xs"
+        >
+          <option value="none">None</option>
+          <option value="grayscale">Grayscale</option>
+          <option value="sepia">Sepia</option>
+          <option value="invert">Invert</option>
+        </select>
+      </div>
+      
       <button 
         onClick={onReset}
         className="px-5 py-2 bg-gray-600 text-white border-none rounded-lg cursor-pointer font-mono text-sm transition-colors duration-300 hover:bg-gray-500 active:bg-gray-400"
@@ -107,6 +124,13 @@ const ParticleControls = ({
         className="px-5 py-2 bg-gray-600 text-white border-none rounded-lg cursor-pointer font-mono text-sm transition-colors duration-300 hover:bg-gray-500 active:bg-gray-400"
       >
         Explode Effect
+      </button>
+      
+      <button 
+        onClick={onDownloadImage}
+        className="px-5 py-2 bg-purple-600 text-white border-none rounded-lg cursor-pointer font-mono text-sm transition-colors duration-300 hover:bg-purple-500 active:bg-purple-400"
+      >
+        Download as Image
       </button>
 
       <div className="flex flex-col gap-1">

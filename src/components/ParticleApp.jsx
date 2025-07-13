@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import ParticleCanvas from './ParticleCanvas';
 import ParticleControls from './ParticleControl';
+import { downloadCanvasAsImage } from '../utils/recorder';
 
 const ParticleApp = () => {
   // Default configuration
@@ -9,7 +10,8 @@ const ParticleApp = () => {
     mouseForce: 30,
     gravity: 0.08,
     noise: 10,
-    clickStrength: 100
+    clickStrength: 100,
+    filter: 'none'
   });
 
   // Default image URL
@@ -20,6 +22,7 @@ const ParticleApp = () => {
   // Triggers for actions
   const [resetTrigger, setResetTrigger] = useState(0);
   const [explodeTrigger, setExplodeTrigger] = useState(0);
+  const canvasRef = useRef(null);
 
   // Particle system info
   const [particleInfo, setParticleInfo] = useState({
@@ -49,6 +52,12 @@ const ParticleApp = () => {
     setParticleInfo(info);
   }, []);
 
+  const handleDownloadImage = useCallback(() => {
+    if (canvasRef.current) {
+      downloadCanvasAsImage(canvasRef.current);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white font-mono p-5 flex flex-col items-center">
       <div className="max-w-2xl text-center mb-8 leading-relaxed">
@@ -74,6 +83,7 @@ const ParticleApp = () => {
           resetTrigger={resetTrigger}
           explodeTrigger={explodeTrigger}
           onParticlesInit={handleParticlesInit}
+          canvasRef={canvasRef}
         />
         
         <ParticleControls
@@ -82,6 +92,7 @@ const ParticleApp = () => {
           onReset={handleReset}
           onExplode={handleExplode}
           onImageLoad={handleImageLoad}
+          onDownloadImage={handleDownloadImage}
         />
       </div>
     </div>

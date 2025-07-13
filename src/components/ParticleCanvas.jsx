@@ -1,13 +1,32 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
-const ParticleCanvas = ({ 
-  config, 
-  onParticlesInit, 
-  imageUrl, 
-  resetTrigger, 
-  explodeTrigger 
+// Helper function to apply color filters
+const applyFilter = (color, filter) => {
+  const [r, g, b, a] = color;
+  switch (filter) {
+    case 'grayscale':
+      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+      return [gray, gray, gray, a];
+    case 'sepia':
+      const tr = Math.min(255, 0.393 * r + 0.769 * g + 0.189 * b);
+      const tg = Math.min(255, 0.349 * r + 0.686 * g + 0.168 * b);
+      const tb = Math.min(255, 0.272 * r + 0.534 * g + 0.131 * b);
+      return [tr, tg, tb, a];
+    case 'invert':
+      return [255 - r, 255 - g, 255 - b, a];
+    default:
+      return color;
+  }
+};
+
+const ParticleCanvas = ({
+  config,
+  onParticlesInit,
+  imageUrl,
+  resetTrigger,
+  explodeTrigger,
+  canvasRef
 }) => {
-  const canvasRef = useRef(null);
   const particlesRef = useRef([]);
   const originsRef = useRef([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
@@ -163,7 +182,8 @@ const ParticleCanvas = ({
       
       // Draw particle
       if (!particle.isHidden) {
-        ctx.fillStyle = `rgba(${origin.color[0]}, ${origin.color[1]}, ${origin.color[2]}, ${origin.color[3] / 255})`;
+        const filteredColor = applyFilter(origin.color, config.filter);
+        ctx.fillStyle = `rgba(${filteredColor[0]}, ${filteredColor[1]}, ${filteredColor[2]}, ${filteredColor[3] / 255})`;
         ctx.fillRect(Math.floor(particle.x), Math.floor(particle.y), 1, 1);
       }
     }
@@ -284,6 +304,7 @@ const ParticleCanvas = ({
   return (
     <div className="relative border-2 border-gray-600 rounded-lg overflow-hidden">
       <canvas
+        
         ref={canvasRef}
         width={400}
         height={400}
