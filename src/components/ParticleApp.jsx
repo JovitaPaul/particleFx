@@ -11,7 +11,10 @@ const ParticleApp = () => {
     gravity: 0.08,
     noise: 10,
     clickStrength: 100,
-    filter: 'none'
+    filter: 'none',
+    particleShape: 'square',
+    hueRotation: 0,
+    vortexMode: false
   });
 
   // Default image URL

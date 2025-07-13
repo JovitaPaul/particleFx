@@ -19,6 +19,38 @@ const applyFilter = (color, filter) => {
   }
 };
 
+// Helper function to draw particles
+const drawParticle = (ctx, particle, origin, config) => {
+  ctx.fillStyle = `hsl(${config.hueRotation}, 100%, 50%)`;
+
+  const filteredColor = applyFilter(origin.color, config.filter);
+  ctx.fillStyle = `rgba(${filteredColor[0]}, ${filteredColor[1]}, ${filteredColor[2]}, ${filteredColor[3] / 255})`;
+
+  const x = Math.floor(particle.x);
+  const y = Math.floor(particle.y);
+  const size = config.particleGap / 2;
+
+  switch (config.particleShape) {
+    case 'circle':
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, Math.PI * 2);
+      ctx.fill();
+      break;
+    case 'triangle':
+      ctx.beginPath();
+      ctx.moveTo(x, y - size);
+      ctx.lineTo(x + size, y + size);
+      ctx.lineTo(x - size, y + size);
+      ctx.closePath();
+      ctx.fill();
+      break;
+    case 'square':
+    default:
+      ctx.fillRect(x - size / 2, y - size / 2, size, size);
+      break;
+  }
+};
+
 const ParticleCanvas = ({
   config,
   onParticlesInit,
@@ -30,6 +62,7 @@ const ParticleCanvas = ({
   const particlesRef = useRef([]);
   const originsRef = useRef([]);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
+  const vortexRef = useRef({ x: 0, y: 0, active: false });
   const animationIdRef = useRef(null);
   const imageRef = useRef(null);
 
@@ -139,14 +172,28 @@ const ParticleCanvas = ({
       
       // Mouse interaction
       if (mouse.active) {
-        const mdx = particle.x - mouse.x;
-        const mdy = particle.y - mouse.y;
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-        
-        if (mdist > 0) {
-          const mforce = config.mouseForce / mdist;
-          particle.vx += (mdx / mdist) * mforce * speed;
-          particle.vy += (mdy / mdist) * mforce * speed;
+        if (config.vortexMode) {
+          const vdx = particle.x - vortexRef.current.x;
+          const vdy = particle.y - vortexRef.current.y;
+          const vdist = Math.sqrt(vdx * vdx + vdy * vdy);
+          if (vdist > 0) {
+            const angle = Math.atan2(vdy, vdx);
+            const force = 1 / vdist;
+            particle.vx += Math.cos(angle + Math.PI / 2) * force;
+            particle.vy += Math.sin(angle + Math.PI / 2) * force;
+            particle.vx -= (vdx / vdist) * force * 0.1;
+            particle.vy -= (vdy / vdist) * force * 0.1;
+          }
+        } else {
+          const mdx = particle.x - mouse.x;
+          const mdy = particle.y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          
+          if (mdist > 0) {
+            const mforce = config.mouseForce / mdist;
+            particle.vx += (mdx / mdist) * mforce * speed;
+            particle.vy += (mdy / mdist) * mforce * speed;
+          }
         }
       }
       
@@ -182,9 +229,7 @@ const ParticleCanvas = ({
       
       // Draw particle
       if (!particle.isHidden) {
-        const filteredColor = applyFilter(origin.color, config.filter);
-        ctx.fillStyle = `rgba(${filteredColor[0]}, ${filteredColor[1]}, ${filteredColor[2]}, ${filteredColor[3] / 255})`;
-        ctx.fillRect(Math.floor(particle.x), Math.floor(particle.y), 1, 1);
+        drawParticle(ctx, particle, origin, config);
       }
     }
     
@@ -239,28 +284,36 @@ const ParticleCanvas = ({
 
   const handleMouseOut = useCallback(() => {
     mouseRef.current.active = false;
+    vortexRef.current.active = false;
   }, []);
 
   const handleClick = useCallback((e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
-    const particles = particlesRef.current;
-    
-    // Apply click force to all particles
-    for (let i = 0; i < particles.length; i++) {
-      const particle = particles[i];
-      const dx = particle.x - clickX;
-      const dy = particle.y - clickY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (config.vortexMode) {
+      vortexRef.current.x = clickX;
+      vortexRef.current.y = clickY;
+      vortexRef.current.active = true;
+    } else {
+      const particles = particlesRef.current;
       
-      if (distance > 0) {
-        const force = config.clickStrength / (distance + 1);
-        particle.vx += (dx / distance) * force * 0.1;
-        particle.vy += (dy / distance) * force * 0.1;
+      // Apply click force to all particles
+      for (let i = 0; i < particles.length; i++) {
+        const particle = particles[i];
+        const dx = particle.x - clickX;
+        const dy = particle.y - clickY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 0) {
+          const force = config.clickStrength / (distance + 1);
+          particle.vx += (dx / distance) * force * 0.1;
+          particle.vy += (dy / distance) * force * 0.1;
+        }
       }
     }
-  }, [config.clickStrength]);
+  }, [config.clickStrength, config.vortexMode]);
 
   // Load image effect
   useEffect(() => {

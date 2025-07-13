@@ -112,6 +112,48 @@ const ParticleControls = ({
         </select>
       </div>
       
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-gray-300">
+          Particle Shape:
+        </label>
+        <select
+          value={config.particleShape}
+          onChange={(e) => handleSliderChange('particleShape', e.target.value)}
+          className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 text-xs"
+        >
+          <option value="square">Square</option>
+          <option value="circle">Circle</option>
+          <option value="triangle">Triangle</option>
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm text-gray-300">
+          Hue Rotation: <span className="font-bold text-white">{config.hueRotation}°</span>
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="360"
+          value={config.hueRotation}
+          onChange={(e) => handleSliderChange('hueRotation', parseInt(e.target.value))}
+          className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+        />
+      </div>
+
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          id="vortexMode"
+          checked={config.vortexMode}
+          onChange={(e) => onConfigChange({ ...config, vortexMode: e.target.checked })}
+          className="w-4 h-4 bg-gray-700 border-gray-600 rounded-lg cursor-pointer"
+        />
+        <label htmlFor="vortexMode" className="text-sm text-gray-300 cursor-pointer">
+          Vortex Mode
+        </label>
+      </div>
+      
       <button 
         onClick={onReset}
         className="px-5 py-2 bg-gray-600 text-white border-none rounded-lg cursor-pointer font-mono text-sm transition-colors duration-300 hover:bg-gray-500 active:bg-gray-400"
