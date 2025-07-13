@@ -12,14 +12,6 @@ const ParticleControls = ({
     onConfigChange({ ...config, [key]: value[0] });
   };
 
-  const handleSelectChange = (key, value) => {
-    onConfigChange({ ...config, [key]: value });
-  };
-
-  const handleCheckboxChange = (key, checked) => {
-    onConfigChange({ ...config, [key]: checked });
-  };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
