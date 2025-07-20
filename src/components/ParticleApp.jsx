@@ -25,7 +25,7 @@ const ParticleApp = () => {
     gravity: 0.08,
     noise: 10,
     clickStrength: 100,
-    filter: "none",
+    filter: "sepia",
     particleShape: "square",
     hueRotation: 0,
     vortexMode: false,

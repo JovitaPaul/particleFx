@@ -1,47 +1,163 @@
-
-import React from 'react';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 const Docs = () => {
+  const configOptions = [
+    {
+      option: "imageSrc",
+      type: "string",
+      default: "Built-in gradient",
+      description: "Path or data URL of the image to convert",
+    },
+    {
+      option: "width",
+      type: "number",
+      default: "400",
+      description: "Canvas width in pixels",
+    },
+    {
+      option: "height",
+      type: "number",
+      default: "400",
+      description: "Canvas height in pixels",
+    },
+    {
+      option: "particleGap",
+      type: "number",
+      default: "4",
+      description: "Spacing between particles (lower = more particles)",
+    },
+    {
+      option: "mouseForce",
+      type: "number",
+      default: "30",
+      description: "Strength of mouse repulsion effect",
+    },
+    {
+      option: "gravity",
+      type: "number",
+      default: "0.08",
+      description: "Force pulling particles back to origin",
+    },
+    {
+      option: "noise",
+      type: "number",
+      default: "10",
+      description: "Random movement applied to particles",
+    },
+    {
+      option: "clickStrength",
+      type: "number",
+      default: "100",
+      description: "Force applied when clicking on canvas",
+    },
+    {
+      option: "hueRotation",
+      type: "number",
+      default: "0",
+      description: "Rotates the hue of particle colors (0-360 degrees)",
+    },
+    {
+      option: "filter",
+      type: "'none' | 'grayscale' | 'sepia' | 'invert'",
+      default: "'none'",
+      description: "Applies a color filter to particles",
+    },
+    {
+      option: "particleShape",
+      type: "'square' | 'circle' | 'triangle'",
+      default: "'square'",
+      description: "Shape of individual particles",
+    },
+    {
+      option: "vortexMode",
+      type: "boolean",
+      default: "false",
+      description: "If true, clicks create a vortex effect instead of a ripple",
+    },
+  ];
+
+
+
+  const apiMethods = [
+    {
+      name: "resetParticles()",
+      description: "Resets all particles to their original positions.",
+    },
+    {
+      name: "explodeParticles()",
+      description: "Applies random outward forces to all particles.",
+    },
+    {
+      name: "updateConfig(newOptions)",
+      description: "Updates configuration options dynamically.",
+    },
+    {
+      name: "downloadImage(filename?)",
+      description: "Downloads the current canvas content as a PNG image.",
+    },
+    {
+      name: "destroy()",
+      description: "Stops animation and removes the canvas from DOM.",
+    },
+  ];
+
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        <header className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-2">package-pariclefx</h1>
-          <p className="text-lg text-gray-400">
-            A lightweight, framework-agnostic JavaScript library for interactive particle-based image hover effects.
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="container max-w-5xl mx-auto py-12 px-6">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold tracking-tight mb-4">
+            package-pariclefx
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            A lightweight, framework-agnostic JavaScript library for interactive
+            particle-based image hover effects.
           </p>
-        </header>
+        </div>
 
+        {/* Installation */}
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 border-b-2 border-gray-700 pb-2">Features</h2>
-          <ul className="list-disc list-inside space-y-2 text-gray-300">
-            <li><strong>Image-to-Particles:</strong> Convert any image into animated particles.</li>
-            <li><strong>Dynamic Interactions:</strong> Particles respond to mouse hover, clicks, and even a vortex mode.</li>
-            <li><strong>Visual Customization:</strong> Apply color filters, hue rotation, and choose particle shapes.</li>
-            <li><strong>Framework Agnostic:</strong> Works with React, Vue, Angular, or vanilla JS.</li>
-            <li><strong>Highly Configurable:</strong> Fine-tune particle behavior, forces, and appearance.</li>
-            <li><strong>Responsive:</strong> Automatically adapts to container size.</li>
-            <li><strong>Image Download:</strong> Save the current canvas state as a PNG image.</li>
-            <li><strong>TypeScript Support:</strong> Full type definitions included.</li>
-            <li><strong>Lightweight:</strong> Zero dependencies, pure JavaScript.</li>
-          </ul>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 border-b-2 border-gray-700 pb-2">Installation</h2>
-          <div className="bg-gray-800 rounded-lg p-4">
-            <code className="text-sm text-white">npm install package-pariclefx</code>
+          <div className="flex items-center gap-2 mb-6">
+            <h2 className="text-3xl font-semibold">Installation</h2>
           </div>
+          <Card>
+            <CardContent className="pt-6">
+              <pre className="bg-muted p-4 rounded-md overflow-x-auto">
+                <code className="text-sm font-mono">
+                  npm install package-pariclefx
+                </code>
+              </pre>
+            </CardContent>
+          </Card>
         </section>
 
+        {/* Quick Start */}
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 border-b-2 border-gray-700 pb-2">Quick Start</h2>
+          <div className="flex items-center gap-2 mb-6">
+            <h2 className="text-3xl font-semibold">Quick Start</h2>
+          </div>
+
           <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-2">Vanilla JavaScript</h3>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <pre><code className="text-sm text-white">
-{`import { createParticleCanvas } from 'package-pariclefx';
+            {/* Vanilla JS */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  Vanilla JavaScript
+                  <Badge variant="secondary">JavaScript</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
+                  <code>{`import { createParticleCanvas } from 'package-pariclefx';
 
 const container = document.getElementById('my-container');
 const particleCanvas = createParticleCanvas(container, {
@@ -56,15 +172,22 @@ const particleCanvas = createParticleCanvas(container, {
 
 particleCanvas.explodeParticles();
 particleCanvas.resetParticles();
-particleCanvas.downloadImage('my-particle-art.png');`}
-                </code></pre>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-2">React</h3>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <pre><code className="text-sm text-white">
-{`import React, { useRef, useEffect, useState } from 'react';
+particleCanvas.downloadImage('my-particle-art.png');`}</code>
+                </pre>
+              </CardContent>
+            </Card>
+
+            {/* React */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  React
+                  <Badge variant="secondary">React</Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
+                  <code>{`import React, { useRef, useEffect, useState } from 'react';
 import { createParticleCanvas } from 'package-pariclefx';
 
 function ParticleComponent() {
@@ -93,64 +216,83 @@ function ParticleComponent() {
       <button onClick={() => particleCanvasRef.current?.downloadImage()}>Download</button>
     </div>
   );
-}`}
-                </code></pre>
-              </div>
-            </div>
+}`}</code>
+                </pre>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
+        {/* Configuration Options */}
         <section className="mb-12">
-          <h2 className="text-3xl font-semibold mb-4 border-b-2 border-gray-700 pb-2">Configuration Options</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-gray-800 rounded-lg">
-              <thead>
-                <tr className="bg-gray-700">
-                  <th className="p-4 text-left">Option</th>
-                  <th className="p-4 text-left">Type</th>
-                  <th className="p-4 text-left">Default</th>
-                  <th className="p-4 text-left">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { option: 'imageSrc', type: 'string', default: 'Built-in gradient', description: 'Path or data URL of the image to convert' },
-                  { option: 'width', type: 'number', default: '400', description: 'Canvas width in pixels' },
-                  { option: 'height', type: 'number', default: '400', description: 'Canvas height in pixels' },
-                  { option: 'particleGap', type: 'number', default: '4', description: 'Spacing between particles (lower = more particles)' },
-                  { option: 'mouseForce', type: 'number', default: '30', description: 'Strength of mouse repulsion effect' },
-                  { option: 'gravity', type: 'number', default: '0.08', description: 'Force pulling particles back to origin' },
-                  { option: 'noise', type: 'number', default: '10', description: 'Random movement applied to particles' },
-                  { option: 'clickStrength', type: 'number', default: '100', description: 'Force applied when clicking on canvas' },
-                  { option: 'hueRotation', type: 'number', default: '0', description: 'Rotates the hue of particle colors (0-360 degrees)' },
-                  { option: 'filter', type: "'none' | 'grayscale' | 'sepia' | 'invert'", default: "'none'", description: 'Applies a color filter to particles' },
-                  { option: 'particleShape', type: "'square' | 'circle' | 'triangle'", default: "'square'", description: 'Shape of individual particles' },
-                  { option: 'vortexMode', type: 'boolean', default: 'false', description: 'If true, clicks create a vortex effect instead of a ripple' },
-                ].map((item, index) => (
-                  <tr key={index} className="border-b border-gray-700">
-                    <td className="p-4 font-mono">{item.option}</td>
-                    <td className="p-4 font-mono">{item.type}</td>
-                    <td className="p-4 font-mono">{item.default}</td>
-                    <td className="p-4">{item.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex items-center gap-2 mb-6">
+            <h2 className="text-3xl font-semibold">Configuration Options</h2>
           </div>
+          <Card>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left p-4 font-semibold">Option</th>
+                      <th className="text-left p-4 font-semibold">Type</th>
+                      <th className="text-left p-4 font-semibold">Default</th>
+                      <th className="text-left p-4 font-semibold">
+                        Description
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {configOptions.map((item, index) => (
+                      <tr key={index} className="border-b last:border-b-0">
+                        <td className="p-4 font-mono text-sm">{item.option}</td>
+                        <td className="p-4 font-mono text-sm text-muted-foreground">
+                          {item.type}
+                        </td>
+                        <td className="p-4 font-mono text-sm">
+                          {item.default}
+                        </td>
+                        <td className="p-4 text-sm">{item.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
         </section>
 
+        {/* API Reference */}
         <section>
-          <h2 className="text-3xl font-semibold mb-4 border-b-2 border-gray-700 pb-2">API Reference</h2>
-          <div className="space-y-4">
-            <h3 className="text-2xl font-semibold">Methods</h3>
-            <ul className="list-disc list-inside space-y-2 text-gray-300">
-              <li><strong>resetParticles():</strong> Resets all particles to their original positions.</li>
-              <li><strong>explodeParticles():</strong> Applies random outward forces to all particles.</li>
-              <li><strong>updateConfig(newOptions):</strong> Updates configuration options dynamically.</li>
-              <li><strong>downloadImage(filename?):</strong> Downloads the current canvas content as a PNG image.</li>
-              <li><strong>destroy():</strong> Stops animation and removes the canvas from DOM.</li>
-            </ul>
+          <div className="flex items-center gap-2 mb-6">
+            <h2 className="text-3xl font-semibold">API Reference</h2>
           </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Methods</CardTitle>
+              <CardDescription>
+                Available methods for controlling particle behavior
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {apiMethods.map((method, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="font-mono text-xs">
+                      {method.name}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground ml-2">
+                    {method.description}
+                  </p>
+                  {index < apiMethods.length - 1 && (
+                    <Separator className="mt-4" />
+                  )}
+                </div>
+              ))}
+            </CardContent>
+          </Card>
         </section>
       </div>
     </div>
