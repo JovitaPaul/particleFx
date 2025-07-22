@@ -1,4 +1,4 @@
-import { createParticleCanvas } from "package-pariclefx";
+import { createParticleCanvas } from "package-particlefx";
 import { useRef, useEffect, useState } from "react";
 
 export default function Test() {

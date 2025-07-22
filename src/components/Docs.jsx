@@ -116,7 +116,7 @@ const Docs = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold tracking-tight mb-4">
-            package-pariclefx
+            package-particlefx
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             A lightweight, framework-agnostic JavaScript library for interactive
@@ -133,7 +133,7 @@ const Docs = () => {
             <CardContent className="pt-6">
               <pre className="bg-muted p-4 rounded-md overflow-x-auto">
                 <code className="text-sm font-mono">
-                  npm install package-pariclefx
+                  npm install package-particlefx
                 </code>
               </pre>
             </CardContent>
@@ -157,7 +157,7 @@ const Docs = () => {
               </CardHeader>
               <CardContent>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{`import { createParticleCanvas } from 'package-pariclefx';
+                  <code>{`import { createParticleCanvas } from 'package-particlefx';
 
 const container = document.getElementById('my-container');
 const particleCanvas = createParticleCanvas(container, {
@@ -188,7 +188,7 @@ particleCanvas.downloadImage('my-particle-art.png');`}</code>
               <CardContent>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
                   <code>{`import React, { useRef, useEffect, useState } from 'react';
-import { createParticleCanvas } from 'package-pariclefx';
+import { createParticleCanvas } from 'package-particlefx';
 
 function ParticleComponent() {
   const containerRef = useRef(null);
