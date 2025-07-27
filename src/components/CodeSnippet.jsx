@@ -58,19 +58,9 @@ const ParticleComponent = () => {
     };
   }, []);
 
-  const handleExplode = () => {
-    particleCanvasRef.current?.explodeParticles();
-  };
-
-  const handleReset = () => {
-    particleCanvasRef.current?.resetParticles();
-  };
-
   return (
     <div>
       <div ref={containerRef} style={{ width: '400px', height: '400px' }} />
-      <button onClick={handleExplode}>Explode</button>
-      <button onClick={handleReset}>Reset</button>
     </div>
   );
 };
@@ -81,8 +71,7 @@ export default ParticleComponent;`;
         return `<template>
   <div>
     <div ref="container" :style="{ width: '400px', height: '400px' }"></div>
-    <button @click="handleExplode">Explode</button>
-    <button @click="handleReset">Reset</button>
+
   </div>
 </template>
 
@@ -105,13 +94,7 @@ onUnmounted(() => {
   particleCanvas?.destroy();
 });
 
-const handleExplode = () => {
-  particleCanvas?.explodeParticles();
-};
 
-const handleReset = () => {
-  particleCanvas?.resetParticles();
-};
 </script>`;
 
       case "vanilla":
@@ -161,7 +144,7 @@ document.getElementById('reset-btn').addEventListener('click', () => {
                 View Full Code
               </Button>
             </DialogTrigger>
-            <DialogContent 
+            <DialogContent
               className="w-[95vw] max-w-6xl h-[85vh] max-h-[85vh] p-0 bg-background border-primary/20 shadow-2xl"
               onInteractOutside={(e) => e.preventDefault()}
             >
@@ -259,8 +242,6 @@ document.getElementById('reset-btn').addEventListener('click', () => {
                         </TabsContent>
                       ))}
                     </Tabs>
-
-
                   </div>
                 </ScrollArea>
               </div>

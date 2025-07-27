@@ -85,8 +85,6 @@ const Docs = () => {
     },
   ];
 
-
-
   const apiMethods = [
     {
       name: "resetParticles()",
@@ -160,19 +158,10 @@ const Docs = () => {
                   <code>{`import { createParticleCanvas } from 'package-particlefx';
 
 const container = document.getElementById('my-container');
+
 const particleCanvas = createParticleCanvas(container, {
   imageSrc: 'path/to/your/image.jpg',
-  width: 600,
-  height: 400,
-  particleGap: 3,
-  mouseForce: 50,
-  filter: 'sepia',
-  particleShape: 'circle',
-});
-
-particleCanvas.explodeParticles();
-particleCanvas.resetParticles();
-particleCanvas.downloadImage('my-particle-art.png');`}</code>
+});`}</code>
                 </pre>
               </CardContent>
             </Card>
@@ -187,33 +176,18 @@ particleCanvas.downloadImage('my-particle-art.png');`}</code>
               </CardHeader>
               <CardContent>
                 <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{`import React, { useRef, useEffect, useState } from 'react';
+                  <code>{`import React, { useRef, useState } from 'react';
 import { createParticleCanvas } from 'package-particlefx';
 
 function ParticleComponent() {
   const containerRef = useRef(null);
-  const particleCanvasRef = useRef(null);
   const [config, setConfig] = useState({
     imageSrc: '/my-image.png',
-    particleGap: 4,
-    mouseForce: 30,
-    hueRotation: 180,
-    vortexMode: true,
   });
-
-  useEffect(() => {
-    if (containerRef.current) {
-      particleCanvasRef.current = createParticleCanvas(containerRef.current, config);
-    }
-    return () => particleCanvasRef.current?.destroy();
-  }, [config]);
 
   return (
     <div>
       <div ref={containerRef} style={{ width: '500px', height: '300px' }} />
-      <button onClick={() => particleCanvasRef.current?.explodeParticles()}>Explode</button>
-      <button onClick={() => particleCanvasRef.current?.resetParticles()}>Reset</button>
-      <button onClick={() => particleCanvasRef.current?.downloadImage()}>Download</button>
     </div>
   );
 }`}</code>
