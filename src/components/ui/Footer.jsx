@@ -25,12 +25,7 @@ const Footer = () => {
     },
   ]
 
-  const footerLinks = [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms of Service", href: "/terms" },
-    { name: "Documentation", href: "/docs" },
-    { name: "Support", href: "/support" },
-  ]
+  
 
   return (
     <footer className=" backdrop-blur-sm px-6 py-2 ">

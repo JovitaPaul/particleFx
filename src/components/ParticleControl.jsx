@@ -100,7 +100,7 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
         </div>
 
         <Tabs defaultValue="physics" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 h-auto p-1">
+          <TabsList className="grid w-full grid-cols-3 h-auto p-1">
             <TabsTrigger value="physics" className="text-xs py-2">
               <Settings className="h-3 w-3 mr-1" />
               Physics
@@ -109,10 +109,10 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
               <Palette className="h-3 w-3 mr-1" />
               Visual
             </TabsTrigger>
-            <TabsTrigger value="image" className="text-xs py-2">
+            {/* <TabsTrigger value="image" className="text-xs py-2">
               <Upload className="h-3 w-3 mr-1" />
               Image
-            </TabsTrigger>
+            </TabsTrigger> */}
             <TabsTrigger value="code" className="text-xs py-2">
               <Code className="h-3 w-3 mr-1" />
               Code
@@ -241,7 +241,7 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
           </TabsContent>
 
           {/* Image Tab */}
-          <TabsContent value="image" className="mt-4">
+          {/* <TabsContent value="image" className="mt-4">
             <div className="space-y-4">
               <div>
                 <Label htmlFor="imageLoader" className="text-sm font-medium mb-2 block">
@@ -265,7 +265,7 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
                 </ul>
               </div>
             </div>
-          </TabsContent>
+          </TabsContent> */}
 
           {/* Code Tab */}
           <TabsContent value="code" className="mt-4">

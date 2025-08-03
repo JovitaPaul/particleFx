@@ -21,7 +21,7 @@ const ParticleApp = () => {
   // Default configuration
   const [config, setConfig] = useState({
     particleGap: 4,
-    mouseForce: 30,
+    mouseForce: 45,
     gravity: 0.08,
     noise: 10,
     clickStrength: 100,
@@ -213,7 +213,6 @@ const ParticleApp = () => {
                     resetTrigger={resetTrigger}
                     explodeTrigger={explodeTrigger}
                     onParticlesInit={handleParticlesInit}
-                    canvasRef={canvasRef}
                   />
                 </div>
               </div>
