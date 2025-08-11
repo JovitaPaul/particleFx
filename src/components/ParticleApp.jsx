@@ -15,6 +15,8 @@ import {
   Settings,
   ExternalLink,
   Code,
+  Github,
+  Star,
 } from "lucide-react";
 
 const ParticleApp = () => {
@@ -25,16 +27,13 @@ const ParticleApp = () => {
     gravity: 0.08,
     noise: 10,
     clickStrength: 100,
-    filter: "sepia",
     particleShape: "square",
     hueRotation: 0,
     vortexMode: false,
   });
 
   // Default image URL
-  const [imageUrl, setImageUrl] = useState(
-    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjY2NmZmO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMzNjYztzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDAwMDk5O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+CiAgCiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2ZmNjY2NiIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iMzAwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iIzY2ZmY2NiIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSI2MCIgZmlsbD0iI2ZmZmY2NiIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iMTAwIiBjeT0iMzAwIiByPSI0MCIgZmlsbD0iI2ZmNjZmZiIgb3BhY2l0eT0iMC44Ii8+CiAgPGNpcmNsZSBjeD0iMzAwIiBjeT0iMzAwIiByPSI0MCIgZmlsbD0iIzY2ZmZmZiIgb3BhY2l0eT0iMC44Ii8+CiAgCiAgPHRleHQgeD0iMjAwIiB5PSI2MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZmZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UEFSVElDTEU8L3RleHQ+CiAgPHRleHQgeD0iMjAwIiB5PSIzNjAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNmZmZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkVGRkVDVDwvdGV4dD4KPC9zdmc+"
-  );
+  const [imageUrl, setImageUrl] = useState("favicon_io/img.png");
 
   // Triggers for actions
   const [resetTrigger, setResetTrigger] = useState(0);
@@ -129,6 +128,18 @@ const ParticleApp = () => {
             >
               <Button asChild variant="outline" size="sm">
                 <a
+                  href="https://github.com/Anmol-TheDev/package-particleFx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <Github className="h-4 w-4" />
+                  <Star className="h-4 w-4" />
+                  Star on GitHub
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a
                   href="https://www.npmjs.com/package/package-particlefx"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -202,7 +213,6 @@ const ParticleApp = () => {
                     <Badge variant="outline" className="text-xs">
                       Live Preview
                     </Badge>
-
                   </div>
                 </div>
 
@@ -302,7 +312,7 @@ const ParticleApp = () => {
         >
           <Card className="p-8 bg-card/30 border-primary/10">
             <div className="text-center space-y-6">
-              <h2 className=" text-2xl sm:text-3xl font-bold">
+              <h2 className="text-2xl sm:text-3xl font-bold">
                 Ready to Use package-particlefx?
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -329,6 +339,16 @@ const ParticleApp = () => {
                   >
                     <ExternalLink className="mr-2 h-5 w-5" />
                     View on NPM
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <a
+                    href="https://github.com/Anmol-TheDev/package-particleFx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="mr-2 h-5 w-5" />
+                    GitHub Repository
                   </a>
                 </Button>
               </div>
