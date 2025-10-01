@@ -32,6 +32,47 @@ const ParticleApp = () => {
     vortexMode: false,
   });
 
+    const controlSections = [
+    {
+      title: "Physics",
+      icon: Settings,
+      controls: [
+        {
+          key: "particleGap",
+          label: "Particle Gap",
+          min: 2,
+          max: 10,
+          step: 1,
+          description: "Spacing between particles",
+        },
+        { key: "gravity", label: "Gravity", min: 0.01, max: 0.2, step: 0.01, description: "Return force strength" },
+        { key: "noise", label: "Noise", min: 0, max: 50, step: 1, description: "Random movement" },
+      ],
+    },
+    {
+      title: "Interaction",
+      icon: MousePointer,
+      controls: [
+        {
+          key: "mouseForce",
+          label: "Mouse Force",
+          min: 10,
+          max: 100,
+          step: 1,
+          description: "Mouse repulsion strength",
+        },
+        {
+          key: "clickStrength",
+          label: "Click Power",
+          min: 0,
+          max: 200,
+          step: 1,
+          description: "Click interaction force",
+        },
+      ],
+    },
+  ]
+
   // Default image URL
   const [imageUrl, setImageUrl] = useState("favicon_io/img.png");
 
@@ -60,6 +101,27 @@ const ParticleApp = () => {
   const handleExplode = useCallback(() => {
     setExplodeTrigger((prev) => prev + 1);
   }, []);
+
+
+const handleRandomize = () => {
+  const newConfig = { ...config };
+
+  controlSections.forEach(section => {
+    section.controls.forEach(ctrl => {
+      const rand =
+        ctrl.min +
+        Math.random() * (ctrl.max - ctrl.min);
+
+      const steps = Math.round((rand - ctrl.min) / ctrl.step);
+      newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
+    });
+  });
+
+  setConfig(newConfig);
+  setResetTrigger(prev => prev + 1);
+};
+
+
 
   const handleImageLoad = useCallback((newImageUrl) => {
     setImageUrl(newImageUrl);
@@ -243,6 +305,7 @@ const ParticleApp = () => {
                 onConfigChange={handleConfigChange}
                 onReset={handleReset}
                 onExplode={handleExplode}
+                onRandomize={handleRandomize}
                 onImageLoad={handleImageLoad}
                 onClose={() => setControlsOpen(false)}
               />
@@ -273,6 +336,7 @@ const ParticleApp = () => {
                         onConfigChange={handleConfigChange}
                         onReset={handleReset}
                         onExplode={handleExplode}
+                        onRandomize={handleRandomize}
                         onImageLoad={handleImageLoad}
                         onClose={() => setControlsOpen(false)}
                       />

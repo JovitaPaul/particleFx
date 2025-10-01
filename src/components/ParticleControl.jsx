@@ -9,10 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { motion } from "framer-motion"
-import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X } from "lucide-react"
+import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X, Dice6 } from "lucide-react"
 import CodeSnippet from "./CodeSnippet"
 
-const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageLoad, onClose }) => {
+const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onRandomize, onImageLoad, onClose }) => {
   const handleSliderChange = (key, value) => {
     onConfigChange({ ...config, [key]: value[0] })
   }
@@ -95,6 +95,11 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button onClick={onExplode} variant="outline" className="w-full bg-transparent" size="sm">
               <Zap className="h-4 w-4 mr-2" /> Explode
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button onClick={onRandomize} variant="outline" className="w-full bg-transparent" size="sm">
+              <Dice6 className="h-4 w-4 mr-2" /> Randomize
             </Button>
           </motion.div>
         </div>
