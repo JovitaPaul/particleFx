@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { motion } from "framer-motion"
-import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X, Dice6 } from "lucide-react"
+import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X, Dices } from "lucide-react"
 import CodeSnippet from "./CodeSnippet"
 
 const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onRandomize, onImageLoad, onClose }) => {
@@ -99,7 +99,7 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onRandom
           </motion.div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button onClick={onRandomize} variant="outline" className="w-full bg-transparent" size="sm">
-              <Dice6 className="h-4 w-4 mr-2" /> Randomize
+              <Dices className="h-4 w-4 mr-2" /> Randomize
             </Button>
           </motion.div>
         </div>
