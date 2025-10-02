@@ -84,25 +84,26 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onRandom
         </div>
         <p className="text-sm text-muted-foreground">Customize your particle effects in real-time</p>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-2">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={onReset} variant="outline" className="w-full bg-transparent" size="sm">
-              <RotateCcw className="h-4 w-4 mr-2" /> Reset
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={onExplode} variant="outline" className="w-full bg-transparent" size="sm">
-              <Zap className="h-4 w-4 mr-2" /> Explode
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={onRandomize} variant="outline" className="w-full bg-transparent" size="sm">
-              <Dices className="h-4 w-4 mr-2" /> Randomize
-            </Button>
-          </motion.div>
-        </div>
+        <div className="flex gap-1">
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+    <Button onClick={onReset} variant="outline" className="w-full bg-transparent" size="sm">
+      <RotateCcw className="h-4 w-4 mr-0" /> Reset
+    </Button>
+  </motion.div>
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+    <Button onClick={onExplode} variant="outline" className="w-full bg-transparent" size="sm">
+      <Zap className="h-4 w-4 mr-0" /> Explode
+    </Button>
+  </motion.div>
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+    <Button onClick={onRandomize} variant="outline" className="w-full bg-transparent" size="sm">
+      <Dices className="h-4 w-4 mr-0" /> Randomize
+    </Button>
+  </motion.div>
+</div>
+
 
         <Tabs defaultValue="physics" className="w-full">
           <TabsList className="grid w-full grid-cols-3 h-auto p-1">
