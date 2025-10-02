@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import ParticleCanvas from "./ParticleCanvas";
 import ParticleControls from "./ParticleControl";
 import MobileBottomSheet from "./MobileBottomSheet";
@@ -33,7 +33,7 @@ const ParticleApp = () => {
     vortexMode: false,
   });
 
-    const controlSections = [
+  const controlSections = [
     {
       title: "Physics",
       icon: Settings,
@@ -46,8 +46,22 @@ const ParticleApp = () => {
           step: 1,
           description: "Spacing between particles",
         },
-        { key: "gravity", label: "Gravity", min: 0.01, max: 0.2, step: 0.01, description: "Return force strength" },
-        { key: "noise", label: "Noise", min: 0, max: 50, step: 1, description: "Random movement" },
+        {
+          key: "gravity",
+          label: "Gravity",
+          min: 0.01,
+          max: 0.2,
+          step: 0.01,
+          description: "Return force strength",
+        },
+        {
+          key: "noise",
+          label: "Noise",
+          min: 0,
+          max: 50,
+          step: 1,
+          description: "Random movement",
+        },
       ],
     },
     {
@@ -72,7 +86,7 @@ const ParticleApp = () => {
         },
       ],
     },
-  ]
+  ];
 
   // Default image URL
   const [imageUrl, setImageUrl] = useState("favicon_io/img.png");
@@ -101,26 +115,21 @@ const ParticleApp = () => {
     setExplodeTrigger((prev) => prev + 1);
   }, []);
 
+  const handleRandomize = () => {
+    const newConfig = { ...config };
 
-const handleRandomize = () => {
-  const newConfig = { ...config };
+    controlSections.forEach((section) => {
+      section.controls.forEach((ctrl) => {
+        const rand = ctrl.min + Math.random() * (ctrl.max - ctrl.min);
 
-  controlSections.forEach(section => {
-    section.controls.forEach(ctrl => {
-      const rand =
-        ctrl.min +
-        Math.random() * (ctrl.max - ctrl.min);
-
-      const steps = Math.round((rand - ctrl.min) / ctrl.step);
-      newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
+        const steps = Math.round((rand - ctrl.min) / ctrl.step);
+        newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
+      });
     });
-  });
 
-  setConfig(newConfig);
-  setResetTrigger(prev => prev + 1);
-};
-
-
+    setConfig(newConfig);
+    setResetTrigger((prev) => prev + 1);
+  };
 
   const handleImageLoad = useCallback((newImageUrl) => {
     setImageUrl(newImageUrl);
