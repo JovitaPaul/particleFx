@@ -1,37 +1,44 @@
 "use client";
-
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { 
-  Settings, 
-  MousePointer, 
-  Palette, 
-  Upload, 
-  RotateCcw, 
-  Zap, 
+import {
+  Settings,
+  MousePointer,
+  Palette,
+  Upload,
+  RotateCcw,
+  Zap,
   Dices,
-  ChevronUp,
-  GripHorizontal
 } from "lucide-react";
 
-const MobileBottomSheet = ({ 
-  config, 
-  onConfigChange, 
-  onReset, 
-  onExplode, 
-  onRandomize, 
+const MobileBottomSheet = ({
+  config,
+  onConfigChange,
+  onReset,
+  onExplode,
+  onRandomize,
   onImageLoad,
-  children 
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -62,23 +69,20 @@ const MobileBottomSheet = ({
           min: 2,
           max: 10,
           step: 1,
-          description: "Spacing between particles",
         },
-        { 
-          key: "gravity", 
-          label: "Gravity", 
-          min: 0.01, 
-          max: 0.2, 
-          step: 0.01, 
-          description: "Return force strength" 
+        {
+          key: "gravity",
+          label: "Gravity",
+          min: 0.01,
+          max: 0.2,
+          step: 0.01,
         },
-        { 
-          key: "noise", 
-          label: "Noise", 
-          min: 0, 
-          max: 50, 
-          step: 1, 
-          description: "Random movement" 
+        {
+          key: "noise",
+          label: "Noise",
+          min: 0,
+          max: 50,
+          step: 1,
         },
       ],
     },
@@ -93,7 +97,6 @@ const MobileBottomSheet = ({
           min: 10,
           max: 100,
           step: 1,
-          description: "Mouse repulsion strength",
         },
         {
           key: "clickStrength",
@@ -101,7 +104,6 @@ const MobileBottomSheet = ({
           min: 0,
           max: 200,
           step: 1,
-          description: "Click interaction force",
         },
       ],
     },
@@ -116,7 +118,6 @@ const MobileBottomSheet = ({
           min: 0,
           max: 360,
           step: 1,
-          description: "Color adjustment",
         },
         {
           key: "particleShape",
@@ -126,13 +127,11 @@ const MobileBottomSheet = ({
             { value: "square", label: "Square" },
             { value: "circle", label: "Circle" },
           ],
-          description: "Particle shape",
         },
         {
           key: "vortexMode",
           label: "Vortex Mode",
           type: "checkbox",
-          description: "Enable vortex effect",
         },
       ],
     },
@@ -186,8 +185,8 @@ const MobileBottomSheet = ({
         <div className="flex justify-between items-center">
           <Label className="text-sm font-medium">{control.label}</Label>
           <span className="text-xs text-muted-foreground">
-            {typeof config[control.key] === "number" 
-              ? config[control.key].toFixed(2) 
+            {typeof config[control.key] === "number"
+              ? config[control.key].toFixed(2)
               : config[control.key]}
           </span>
         </div>
@@ -199,183 +198,104 @@ const MobileBottomSheet = ({
           step={control.step}
           className="w-full"
         />
-        {control.description && (
-          <p className="text-xs text-muted-foreground">{control.description}</p>
-        )}
       </div>
     );
   };
 
   return (
-    <>
-      {/* Floating Action Button Trigger */}
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5 }}
-            className="fixed bottom-6 right-6 z-40 lg:hidden"
-          >
-            <Button
-              size="lg"
-              className="rounded-full h-14 w-14 shadow-lg bg-primary hover:bg-primary/90"
-            >
-              <Settings className="h-6 w-6" />
-            </Button>
-          </motion.div>
-        </SheetTrigger>
-
-        <SheetContent 
-          side="bottom" 
-          className="h-[80vh] rounded-t-3xl border-t-2 border-primary/20 p-0"
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button
+          className="fixed bottom-6 right-6 z-40 lg:hidden rounded-full h-14 w-14 shadow-lg"
+          size="lg"
         >
-          {/* Drag Handle */}
-          <div className="flex justify-center pt-4 pb-2">
-            <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
-          </div>
+          <Settings className="h-6 w-6" />
+        </Button>
+      </SheetTrigger>
 
-          <SheetHeader className="px-6 pb-4 border-b border-border/50">
-            <SheetTitle className="flex items-center gap-2 text-lg">
-              <Settings className="h-5 w-5" />
-              Particle Controls
-            </SheetTitle>
-          </SheetHeader>
+      <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl p-0">
+        <div className="flex justify-center pt-4 pb-2">
+          <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
+        </div>
 
-          <div className="flex-1 overflow-hidden">
-            <Tabs defaultValue="physics" className="h-full flex flex-col">
-              {/* Tab Navigation */}
-              <div className="px-6 pt-4">
-                <TabsList className="grid w-full grid-cols-3 mb-4">
-                  {controlSections.map((section) => {
-                    const Icon = section.icon;
-                    return (
-                      <TabsTrigger 
-                        key={section.id} 
-                        value={section.id}
-                        className="flex items-center gap-1 text-xs"
-                      >
-                        <Icon className="h-3 w-3" />
-                        <span className="hidden sm:inline">{section.title}</span>
-                      </TabsTrigger>
-                    );
-                  })}
-                </TabsList>
-              </div>
+        <SheetHeader className="px-6 pb-4 border-b">
+          <SheetTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5" />
+            Particle Controls
+          </SheetTitle>
+        </SheetHeader>
 
-              {/* Tab Content */}
-              <div className="flex-1 overflow-hidden">
-                {controlSections.map((section) => (
-                  <TabsContent 
-                    key={section.id} 
-                    value={section.id} 
-                    className="h-full mt-0"
-                  >
-                    <ScrollArea className="h-full px-6">
-                      <div className="space-y-6 pb-6">
-                        <Card className="bg-card/50">
-                          <CardContent className="p-4 space-y-4">
-                            {section.controls.map(renderControl)}
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </ScrollArea>
-                  </TabsContent>
-                ))}
+        <div className="flex-1 overflow-hidden">
+          <Tabs defaultValue="physics" className="h-full flex flex-col">
+            <div className="px-6 pt-4">
+              <TabsList className="grid w-full grid-cols-3">
+                {controlSections.map((section) => {
+                  const Icon = section.icon;
+                  return (
+                    <TabsTrigger
+                      key={section.id}
+                      value={section.id}
+                      className="flex items-center gap-1 text-xs"
+                    >
+                      <Icon className="h-3 w-3" />
+                      <span className="hidden sm:inline">{section.title}</span>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            </div>
 
-                {/* Actions Tab */}
-                <TabsContent value="actions" className="h-full mt-0">
+            <div className="flex-1 overflow-hidden">
+              {controlSections.map((section) => (
+                <TabsContent
+                  key={section.id}
+                  value={section.id}
+                  className="h-full mt-0"
+                >
                   <ScrollArea className="h-full px-6">
                     <div className="space-y-6 pb-6">
-                      {/* Image Upload */}
-                      <Card className="bg-card/50">
+                      <Card>
                         <CardContent className="p-4 space-y-4">
-                          <div className="space-y-2">
-                            <Label className="text-sm font-medium">Upload Image</Label>
-                            <div className="relative">
-                              <Input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
-                              />
-                              <Upload className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      {/* Action Buttons */}
-                      <Card className="bg-card/50">
-                        <CardContent className="p-4 space-y-3">
-                          <Button
-                            onClick={onReset}
-                            variant="outline"
-                            className="w-full justify-start gap-2"
-                          >
-                            <RotateCcw className="h-4 w-4" />
-                            Reset Canvas
-                          </Button>
-                          <Button
-                            onClick={onExplode}
-                            variant="outline"
-                            className="w-full justify-start gap-2"
-                          >
-                            <Zap className="h-4 w-4" />
-                            Explode Effect
-                          </Button>
-                          <Button
-                            onClick={onRandomize}
-                            variant="outline"
-                            className="w-full justify-start gap-2"
-                          >
-                            <Dices className="h-4 w-4" />
-                            Randomize Settings
-                          </Button>
+                          {section.controls.map(renderControl)}
                         </CardContent>
                       </Card>
                     </div>
                   </ScrollArea>
                 </TabsContent>
-              </div>
+              ))}
+            </div>
 
-              {/* Quick Actions Bar */}
-              <div className="border-t border-border/50 p-4">
+            <div className="border-t p-4">
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Upload Image</Label>
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold"
+                  />
+                </div>
                 <div className="grid grid-cols-3 gap-2">
-                  <Button
-                    onClick={onReset}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1"
-                  >
-                    <RotateCcw className="h-3 w-3" />
+                  <Button onClick={onReset} variant="outline" size="sm">
+                    <RotateCcw className="h-3 w-3 mr-1" />
                     Reset
                   </Button>
-                  <Button
-                    onClick={onExplode}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1"
-                  >
-                    <Zap className="h-3 w-3" />
+                  <Button onClick={onExplode} variant="outline" size="sm">
+                    <Zap className="h-3 w-3 mr-1" />
                     Explode
                   </Button>
-                  <Button
-                    onClick={onRandomize}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-1"
-                  >
-                    <Dices className="h-3 w-3" />
+                  <Button onClick={onRandomize} variant="outline" size="sm">
+                    <Dices className="h-3 w-3 mr-1" />
                     Random
                   </Button>
                 </div>
               </div>
-            </Tabs>
-          </div>
-        </SheetContent>
-      </Sheet>
-    </>
+            </div>
+          </Tabs>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
