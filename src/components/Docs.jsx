@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,8 +8,20 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Copy, Check } from "lucide-react";
 
 const Docs = () => {
+  const [copiedStates, setCopiedStates] = useState({});
+
+  const copyToClipboard = (text, buttonId) => {
+    navigator.clipboard.writeText(text);
+    setCopiedStates(prev => ({ ...prev, [buttonId]: true }));
+    setTimeout(() => {
+      setCopiedStates(prev => ({ ...prev, [buttonId]: false }));
+    }, 2000);
+  };
+
   const configOptions = [
     {
       option: "preset",
@@ -219,11 +231,25 @@ const Docs = () => {
           </div>
           <Card>
             <CardContent className="pt-6">
-              <pre className="bg-muted p-4 rounded-md overflow-x-auto">
-                <code className="text-sm font-mono">
-                  npm install package-particlefx
-                </code>
-              </pre>
+              <div className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => copyToClipboard("npm install package-particlefx", "install")}
+                  className="absolute top-2 right-2 h-8 w-8 p-0 bg-background/80 hover:bg-background border border-border/50 hover:border-border z-10"
+                >
+                  {copiedStates.install ? (
+                    <Check className="h-3 w-3" />
+                  ) : (
+                    <Copy className="h-3 w-3" />
+                  )}
+                </Button>
+                <pre className="bg-muted p-4 rounded-md overflow-x-auto pr-12">
+                  <code className="text-sm font-mono">
+                    npm install package-particlefx
+                  </code>
+                </pre>
+              </div>
             </CardContent>
           </Card>
         </section>
@@ -244,8 +270,33 @@ const Docs = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{`import { createParticleCanvas } from 'package-particlefx';
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copyToClipboard(`import { createParticleCanvas } from 'package-particlefx';
+
+const container = document.getElementById('my-container');
+const particleCanvas = createParticleCanvas(container, {
+  preset: 'fireworks', // Use a preset for a quick start
+  width: '100vw',      // Responsive width
+  height: '100vh',     // Responsive height
+});
+
+// Control the animation
+particleCanvas.explodeParticles();
+particleCanvas.resetParticles();
+particleCanvas.downloadImage('my-particle-art.png');`, "vanilla")}
+                    className="absolute top-2 right-2 h-8 w-8 p-0 bg-background/80 hover:bg-background border border-border/50 hover:border-border z-10"
+                  >
+                    {copiedStates.vanilla ? (
+                      <Check className="h-3 w-3" />
+                    ) : (
+                      <Copy className="h-3 w-3" />
+                    )}
+                  </Button>
+                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm pr-12">
+                    <code>{`import { createParticleCanvas } from 'package-particlefx';
 
 const container = document.getElementById('my-container');
 const particleCanvas = createParticleCanvas(container, {
@@ -258,7 +309,8 @@ const particleCanvas = createParticleCanvas(container, {
 particleCanvas.explodeParticles();
 particleCanvas.resetParticles();
 particleCanvas.downloadImage('my-particle-art.png');`}</code>
-                </pre>
+                  </pre>
+                </div>
               </CardContent>
             </Card>
 
@@ -271,8 +323,68 @@ particleCanvas.downloadImage('my-particle-art.png');`}</code>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{`import React, { useRef, useEffect, useState } from 'react';
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copyToClipboard(`import React, { useRef, useEffect, useState } from 'react';
+import { createParticleCanvas } from 'package-particlefx';
+
+function ParticleComponent() {
+  const containerRef = useRef(null);
+  const particleCanvasRef = useRef(null);
+  const [config, setConfig] = useState({
+    preset: 'galaxy',
+    width: '100%',
+    height: '400px',
+  });
+
+  useEffect(() => {
+    if (containerRef.current) {
+      particleCanvasRef.current = createParticleCanvas(containerRef.current, config);
+    }
+
+    return () => {
+      particleCanvasRef.current?.destroy();
+    };
+  }, [config]);
+
+  const handleExplode = () => {
+    particleCanvasRef.current?.explodeParticles();
+  };
+
+  const handleReset = () => {
+    particleCanvasRef.current?.resetParticles();
+  };
+
+  const handleDownload = () => {
+    particleCanvasRef.current?.downloadImage();
+  };
+
+  return (
+    <div>
+      <div ref={containerRef} style={{ width: '100%', height: '400px' }} />
+      <button onClick={handleExplode}>Explode</button>
+      <button onClick={handleReset}>Reset</button>
+      <button onClick={handleDownload}>Download</button>
+      <button onClick={() => setConfig(prev => ({ ...prev, preset: 'snow' }))}>
+        Change to Snow
+      </button>
+    </div>
+  );
+}
+
+export default ParticleComponent;`, "react")}
+                    className="absolute top-2 right-2 h-8 w-8 p-0 bg-background/80 hover:bg-background border border-border/50 hover:border-border z-10"
+                  >
+                    {copiedStates.react ? (
+                      <Check className="h-3 w-3" />
+                    ) : (
+                      <Copy className="h-3 w-3" />
+                    )}
+                  </Button>
+                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm pr-12">
+                    <code>{`import React, { useRef, useEffect, useState } from 'react';
 import { createParticleCanvas } from 'package-particlefx';
 
 function ParticleComponent() {
@@ -320,7 +432,8 @@ function ParticleComponent() {
 }
 
 export default ParticleComponent;`}</code>
-                </pre>
+                  </pre>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -430,14 +543,33 @@ export default ParticleComponent;`}</code>
                 <CardTitle>Example: updateConfig()</CardTitle>
               </CardHeader>
               <CardContent>
-                <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{`particleCanvas.updateConfig({
+                <div className="relative">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => copyToClipboard(`particleCanvas.updateConfig({
+  mouseForce: 80,
+  gravity: 0.12,
+  particleGap: 2,
+  filter: 'grayscale'
+});`, "updateConfig")}
+                    className="absolute top-2 right-2 h-8 w-8 p-0 bg-background/80 hover:bg-background border border-border/50 hover:border-border z-10"
+                  >
+                    {copiedStates.updateConfig ? (
+                      <Check className="h-3 w-3" />
+                    ) : (
+                      <Copy className="h-3 w-3" />
+                    )}
+                  </Button>
+                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm pr-12">
+                    <code>{`particleCanvas.updateConfig({
   mouseForce: 80,
   gravity: 0.12,
   particleGap: 2,
   filter: 'grayscale'
 });`}</code>
-                </pre>
+                  </pre>
+                </div>
               </CardContent>
             </Card>
           </div>
