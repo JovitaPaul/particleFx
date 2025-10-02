@@ -70,6 +70,7 @@ const ParticleCanvas = ({
     }
   }, [explodeTrigger]);
 
+
   useEffect(() => {
     if (particleCanvasRef.current) {
       particleCanvasRef.current.updateConfig({ imageSrc: imageUrl });

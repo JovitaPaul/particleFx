@@ -9,10 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { motion } from "framer-motion"
-import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X } from "lucide-react"
+import { RotateCcw, Zap, Upload, Settings, Palette, MousePointer, Code, X, Dices } from "lucide-react"
 import CodeSnippet from "./CodeSnippet"
 
-const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageLoad, onClose }) => {
+const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onRandomize, onImageLoad, onClose }) => {
   const handleSliderChange = (key, value) => {
     onConfigChange({ ...config, [key]: value[0] })
   }
@@ -84,20 +84,26 @@ const ParticleControls = ({ config, onConfigChange, onReset, onExplode, onImageL
         </div>
         <p className="text-sm text-muted-foreground">Customize your particle effects in real-time</p>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-2">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={onReset} variant="outline" className="w-full bg-transparent" size="sm">
-              <RotateCcw className="h-4 w-4 mr-2" /> Reset
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button onClick={onExplode} variant="outline" className="w-full bg-transparent" size="sm">
-              <Zap className="h-4 w-4 mr-2" /> Explode
-            </Button>
-          </motion.div>
-        </div>
+        <div className="flex gap-1">
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} >
+    <Button onClick={onReset} variant="outline" className="w-full bg-transparent" size="sm">
+      <RotateCcw className="h-4 w-4 mr-0" /> Reset
+    </Button>
+  </motion.div>
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} >
+    <Button onClick={onExplode} variant="outline" className="w-full bg-transparent" size="sm">
+      <Zap className="h-4 w-4 mr-0" /> Explode
+    </Button>
+  </motion.div>
+  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} >
+    <Button onClick={onRandomize} variant="outline" className="w-full bg-transparent" size="sm">
+      <Dices className="h-4 w-4 mr-0" /> Randomize
+    </Button>
+  </motion.div>
+</div>
+        
 
         <Tabs defaultValue="physics" className="w-full">
           <TabsList className="grid w-full grid-cols-3 h-auto p-1">
