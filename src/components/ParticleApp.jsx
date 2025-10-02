@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ParticleCanvas from "./ParticleCanvas";
 import ParticleControls from "./ParticleControl";
 import MobileBottomSheet from "./MobileBottomSheet";
