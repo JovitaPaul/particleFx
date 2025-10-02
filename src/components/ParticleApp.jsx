@@ -1,5 +1,3 @@
-
-
 import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleCanvas from "./ParticleCanvas";
@@ -18,6 +16,7 @@ import {
   Github,
   Star,
 } from "lucide-react";
+import CodeTabs from "./CodeTabs";
 
 const ParticleApp = () => {
   // Default configuration
@@ -32,7 +31,7 @@ const ParticleApp = () => {
     vortexMode: false,
   });
 
-    const controlSections = [
+  const controlSections = [
     {
       title: "Physics",
       icon: Settings,
@@ -103,25 +102,23 @@ const ParticleApp = () => {
   }, []);
 
 
-const handleRandomize = () => {
-  const newConfig = { ...config };
+  const handleRandomize = () => {
+    const newConfig = { ...config };
 
-  controlSections.forEach(section => {
-    section.controls.forEach(ctrl => {
-      const rand =
-        ctrl.min +
-        Math.random() * (ctrl.max - ctrl.min);
+    controlSections.forEach(section => {
+      section.controls.forEach(ctrl => {
+        const rand =
+          ctrl.min +
+          Math.random() * (ctrl.max - ctrl.min);
 
-      const steps = Math.round((rand - ctrl.min) / ctrl.step);
-      newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
+        const steps = Math.round((rand - ctrl.min) / ctrl.step);
+        newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
+      });
     });
-  });
 
-  setConfig(newConfig);
-  setResetTrigger(prev => prev + 1);
-};
-
-
+    setConfig(newConfig);
+    setResetTrigger(prev => prev + 1);
+  };
 
   const handleImageLoad = useCallback((newImageUrl) => {
     setImageUrl(newImageUrl);
@@ -383,10 +380,9 @@ const handleRandomize = () => {
                 Install the package and start creating amazing particle effects
                 in your projects
               </p>
-              <div className="bg-muted/50 rounded-lg p-6 max-w-2xl mx-auto">
-                <code className="text-lg font-mono text-primary">
-                  npm install package-particlefx
-                </code>
+              <div className="mx-auto w-full max-w-lg">
+
+                <CodeTabs />
               </div>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button asChild size="lg">
@@ -423,5 +419,7 @@ const handleRandomize = () => {
     </div>
   );
 };
+
+
 
 export default ParticleApp;
