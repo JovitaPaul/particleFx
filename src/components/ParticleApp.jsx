@@ -19,6 +19,7 @@ import {
   Github,
   Star,
 } from "lucide-react";
+import CodeTabs from "./CodeTabs";
 
 const ParticleApp = () => {
   // Default configuration
@@ -121,7 +122,6 @@ const ParticleApp = () => {
     controlSections.forEach((section) => {
       section.controls.forEach((ctrl) => {
         const rand = ctrl.min + Math.random() * (ctrl.max - ctrl.min);
-
         const steps = Math.round((rand - ctrl.min) / ctrl.step);
         newConfig[ctrl.key] = +(ctrl.min + steps * ctrl.step).toFixed(2); // 2 decimals
       });
@@ -350,10 +350,8 @@ const ParticleApp = () => {
                 Install the package and start creating amazing particle effects
                 in your projects
               </p>
-              <div className="bg-muted/50 rounded-lg p-6 max-w-2xl mx-auto">
-                <code className="text-lg font-mono text-primary">
-                  npm install package-particlefx
-                </code>
+              <div className="mx-auto w-full max-w-lg">
+                <CodeTabs />
               </div>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button asChild size="lg">

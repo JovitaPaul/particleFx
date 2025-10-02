@@ -1,4 +1,4 @@
-"use client"
+
 import { Github, Twitter, Heart, Sparkles, Mail, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
