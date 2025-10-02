@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleCanvas from "./ParticleCanvas";
 import ParticleControls from "./ParticleControl";
+import MobileBottomSheet from "./MobileBottomSheet";
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -79,8 +80,6 @@ const ParticleApp = () => {
   // Triggers for actions
   const [resetTrigger, setResetTrigger] = useState(0);
   const [explodeTrigger, setExplodeTrigger] = useState(0);
-  const [controlsOpen, setControlsOpen] = useState(false);
-  const canvasRef = useRef(null);
 
   // Particle system info
   const [particleInfo, setParticleInfo] = useState({
@@ -307,64 +306,23 @@ const handleRandomize = () => {
                 onExplode={handleExplode}
                 onRandomize={handleRandomize}
                 onImageLoad={handleImageLoad}
-                onClose={() => setControlsOpen(false)}
+                onClose={() => {}}
               />
             </div>
 
-            {/* Mobile Controls - Overlay */}
-            <AnimatePresence>
-              {controlsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, x: 300 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 300 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 lg:hidden"
-                  onClick={() => setControlsOpen(false)}
-                >
-                  <motion.div
-                    initial={{ opacity: 0, x: 300 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 300 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="absolute right-0 top-0 h-full w-full max-w-sm bg-background border-l shadow-2xl overflow-y-auto"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="p-4">
-                      <ParticleControls
-                        config={config}
-                        onConfigChange={handleConfigChange}
-                        onReset={handleReset}
-                        onExplode={handleExplode}
-                        onRandomize={handleRandomize}
-                        onImageLoad={handleImageLoad}
-                        onClose={() => setControlsOpen(false)}
-                      />
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Mobile Bottom Sheet - Only visible on mobile */}
+            <div className="lg:hidden">
+              <MobileBottomSheet
+                config={config}
+                onConfigChange={handleConfigChange}
+                onReset={handleReset}
+                onExplode={handleExplode}
+                onRandomize={handleRandomize}
+                onImageLoad={handleImageLoad}
+              />
+            </div>
           </motion.div>
         </div>
-
-        {/* Mobile Controls Toggle */}
-        {!controlsOpen && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5 }}
-            className="fixed bottom-6 right-6 z-40 lg:hidden"
-          >
-            <Button
-              size="lg"
-              onClick={() => setControlsOpen(true)}
-              className="rounded-full h-14 w-14 shadow-lg bg-primary hover:bg-primary/90"
-            >
-              <Settings className="h-6 w-6" />
-            </Button>
-          </motion.div>
-        )}
 
         {/* Installation Section */}
         <motion.div
