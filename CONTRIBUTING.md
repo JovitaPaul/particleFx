@@ -93,29 +93,20 @@ fix: handle resize bug #42
 - **Linting:** ESLint + Prettier
 - **UI Components:** Follow **shadcn/ui** conventions if contributing to demos.
 
-**Run before committing:**
-```bash
-pnpm lint
-pnpm format
-```
-
-- Add/update tests when contributing new features or fixes.
-- Run tests with:
-  ```bash
-  pnpm test
-  ```
+Always Test your code before sending a PR and attach a video/screenshots of working solution to the issue.
+Codes without any Screenshots of visible solutions will not be merged.
 
 ## General Guidelines
 
-- Keep functions and modules small, focused, and framework-agnostic.
+- Keep functions and modules small and focused.
 - Write descriptive comments for complex logic.
-- Update documentation (`README.md` or JSDoc) for new features.
+- Update documentation (`README.md`) for new features.
 - Optimize for performance (particle count, canvas size, etc.).
 
 ## Communication
 
 - Use GitHub Issues for discussions before starting major changes.
-- Be respectful and constructive when giving feedback.
+- Be respectful and constructive when giving/receiving feedback.
 - Remember: contributors may have different experience levels.
 
 ---
