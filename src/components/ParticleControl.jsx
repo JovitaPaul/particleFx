@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -56,24 +56,6 @@ const ParticleControls = ({
   onClose,
 }) => {
   const [highlightKey, setHighlightKey] = useState(null);
-  const [fps, setFps] = useState(0);
-
-  // FPS Counter
-  useEffect(() => {
-    let lastFrame = performance.now();
-    let frameCount = 0;
-    const update = () => {
-      const now = performance.now();
-      frameCount++;
-      if (now - lastFrame >= 1000) {
-        setFps(frameCount);
-        frameCount = 0;
-        lastFrame = now;
-      }
-      requestAnimationFrame(update);
-    };
-    update();
-  }, []);
 
   const handleSliderChange = (key, value) => {
     onConfigChange({ ...config, [key]: value[0] });
@@ -172,7 +154,6 @@ const ParticleControls = ({
         <p className="text-sm text-muted-foreground">
           Customize your particle effects in real-time
         </p>
-        <div className="text-xs text-muted-foreground mt-1">FPS: {fps}</div>
 
         {/* Quick Actions */}
         <div className="flex gap-2 mt-2">
