@@ -71,7 +71,7 @@ const frameCountRef = useRef(0);
 
                 const warnings = [];
                 if (fps < 30) warnings.push("Low FPS");
-                if (particleCount > 2000) warnings.push("High particle count");
+                if (particleCount > 10000) warnings.push("High particle count");
                 if (memoryMB !== null && memoryMB > 400) warnings.push("High memory");
 
                 const stats = { fps, particleCount, memoryMB, warnings };
